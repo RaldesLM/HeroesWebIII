@@ -1,0 +1,48 @@
+Preguntas de la práctica — ASP.NET Core Identity en HeroesWeb
+
+1. ¿Qué es ASP.NET Core Identity?
+Es el sistema de ASP.NET Core para administrar usuarios, contraseñas, login, logout, roles, claims y tokens.
+
+2. ¿Cuál es la diferencia entre autenticación y autorización?
+Autenticación responde quién es el usuario.
+Autorización responde qué puede hacer ese usuario.
+
+3. ¿Qué representa IdentityUser?
+Es la clase que representa al usuario del sistema (Id, UserName, Email, PasswordHash, etc.).
+
+4. ¿Para qué sirve ApplicationDbContext?
+Es el contexto de Entity Framework que guarda las tablas de Identity (usuarios y seguridad).
+
+5. ¿Por qué en esta aplicación existe HeroesContext además de ApplicationDbContext?
+HeroesContext administra Heroes y SuperPoderes (el negocio).
+ApplicationDbContext administra Identity.
+Así una migración de Identity no vuelve a crear las tablas de héroes.
+
+6. ¿Qué tabla almacena los usuarios?
+AspNetUsers.
+
+7. ¿La contraseña se almacena directamente en AspNetUsers?
+No. Se guarda un hash en la columna PasswordHash, no el texto original.
+
+8. ¿Para qué sirve app.UseAuthentication();
+Identifica quién es el usuario (lee la cookie de autenticación).
+
+9. ¿Para qué sirve app.UseAuthorization();
+Decide si ese usuario tiene permiso para entrar a una página.
+
+10. ¿Por qué UseAuthentication() debe ejecutarse antes que UseAuthorization()?
+Primero hay que saber quién es el usuario y después decidir si puede acceder.
+
+11. ¿Qué realiza options.Conventions.AuthorizeFolder("/Heroes");
+Obliga a iniciar sesión para entrar a todas las páginas de la carpeta Pages/Heroes.
+
+12. ¿Por qué podemos utilizar /Identity/Account/Login aunque no tengamos un archivo Login.cshtml dentro de nuestro proyecto?
+Porque Identity incluye una Razor Class Library con las páginas Login, Register y Logout.
+
+13. ¿Qué hace el comando:
+dotnet ef migrations add CrearIdentity --context ApplicationDbContext
+Crea una migración solo con las tablas de Identity, usando ApplicationDbContext.
+
+14. ¿Qué hace:
+dotnet ef database update --context ApplicationDbContext
+Aplica esa migración y crea las tablas AspNet... en HeroesDb.
